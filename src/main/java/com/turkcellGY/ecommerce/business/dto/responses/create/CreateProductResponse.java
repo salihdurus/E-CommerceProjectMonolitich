@@ -1,5 +1,6 @@
 package com.turkcellGY.ecommerce.business.dto.responses.create;
 
+import com.turkcellGY.ecommerce.entities.enums.Status;
 import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,4 +19,5 @@ public class CreateProductResponse {
     private int quantity;
     private double price;
     private String description;
+    private Status status;
 }

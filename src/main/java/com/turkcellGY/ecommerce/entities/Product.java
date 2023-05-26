@@ -1,5 +1,6 @@
-package com.turkcellGY.ecommerce.entity;
+package com.turkcellGY.ecommerce.entities;
 
+import com.turkcellGY.ecommerce.entities.enums.Status;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,4 +23,6 @@ public class Product {
     private int quantity;
     private double price;
     private String description;
+    @Enumerated(EnumType.STRING)
+    private Status status;
 }

@@ -7,7 +7,9 @@ import com.turkcellGY.ecommerce.business.dto.responses.create.CreateProductRespo
 import com.turkcellGY.ecommerce.business.dto.responses.get.GetAllProductsResponse;
 import com.turkcellGY.ecommerce.business.dto.responses.get.GetProductResponse;
 import com.turkcellGY.ecommerce.business.dto.responses.update.UpdateProductResponse;
+import com.turkcellGY.ecommerce.entities.enums.Status;
 import jakarta.validation.Valid;
+import jakarta.websocket.server.PathParam;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.web.bind.annotation.*;
@@ -21,9 +23,9 @@ import java.util.UUID;
 public class ProductsController {
     private final ProductService service;
 
-    @GetMapping
-    public List<GetAllProductsResponse> getAll() {
-        return service.getAll();
+    @GetMapping()
+    public List<GetAllProductsResponse> getAll(@RequestParam(defaultValue = "false") boolean includePassive) {
+        return service.getAll(includePassive);
     }
 
     @GetMapping("/{id}")
@@ -37,12 +39,17 @@ public class ProductsController {
     }
 
     @PutMapping("/{id}")
-    public UpdateProductResponse update(@PathVariable UUID id,@Valid @RequestBody UpdateProductRequest request) {
-        return service.update(id,request);
+    public UpdateProductResponse update(@Valid @PathVariable UUID id, @Valid @RequestBody UpdateProductRequest request) {
+        return service.update(id, request);
     }
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable UUID id) {
         service.delete(id);
+    }
+
+    @PutMapping("/{id}/status={status}")
+    public void setStatus(@PathVariable UUID id,@PathVariable Status status) {
+        service.setStatus(id, status);
     }
 }
